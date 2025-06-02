@@ -47,9 +47,15 @@ def log_In_As_Admin():
 
         if userPassword == AdminPassword:
             print(f"Welcome {admin}")
+            print("Feel free to use the 'cheat' command to see the result")
             loggedIn = True
+        else:
+            print("Wrong password")
+            print("You can still play or retry the log in")
+
     else:
         print("This user doesnt exist")
+        print("You can still play or retry the log in")
 
 
 # This functions starts the game
