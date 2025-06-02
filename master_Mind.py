@@ -47,7 +47,7 @@ def log_In_As_Admin():
 
         if userPassword == AdminPassword:
             print(f"Welcome {admin}")
-            print("Feel free to use the 'cheat' command to see the result")
+            print("Feel free to use the 'cheat' command to see the awnser")
             loggedIn = True
         else:
             print("Wrong password")
