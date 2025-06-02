@@ -1,4 +1,13 @@
 #!/bin/python3
+# MasterMind
+# by ICTROCN
+# v1.01
+# 15-8-2024
+# Last mod by DevJan : added loop for replay
+
+admin = "user"
+AdminPassword = "password"
+loggedIn = False
 
 print("MasterMind")
 
@@ -29,6 +38,28 @@ def get_Feedback(secret, guess):
 def show_Secret(mystery):
     print(mystery)
 
+# This function allows the user to log in
+def log_In_As_Admin():
+    global loggedIn
+    print("Before you cheat pls log in as a admin")
+    user = input("User: ")
+        
+    if user == admin:
+        userPassword = input("Enter the password: " )
+
+        if userPassword == AdminPassword:
+            print(f"Welcome {admin}")
+            print("Feel free to use the 'cheat' command to see the result")
+            loggedIn = True
+        else:
+            print("Wrong password")
+            print("You can still play or retry the log in")
+
+    else:
+        print("This user doesnt exist")
+        print("You can still play or retry the log in")
+
+
 # This functions starts the game
 def play_Mastermind():
     print("Welcome to Mastermind!")
@@ -45,7 +76,14 @@ def play_Mastermind():
             if not valid_Guess:
                 print("Invalid input. Enter 4 digits, each from 1 to 6.")
 
-            show_Secret(secret_Code) if guess == "cheat" else False
+            if guess == "cheat":
+                if loggedIn == True:
+                    show_Secret(secret_Code)
+                else:
+                    log_In_As_Admin()
+
+            else:
+                False
 
         black, white = get_Feedback(secret_Code, guess)
         print(f"Black pegs (correct position): {black}, White pegs (wrong position): {white}")
