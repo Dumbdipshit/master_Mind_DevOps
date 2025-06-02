@@ -4,6 +4,11 @@
 # v1.01
 # 15-8-2024
 # Last mod by DevJan : added loop for replay
+
+admin = "user"
+AdminPassword = "password"
+loggedIn = False
+
 print("MasterMind")
 
 import random
@@ -30,6 +35,25 @@ def get_Feedback(secret, guess):
 def show_Secret(mystery):
     print(mystery)
 
+
+# This function allows the user to log in
+def log_In_As_Admin():
+    global loggedIn
+    print("Before you cheat pls log in as a admin")
+    user = input("User: ")
+        
+    if user == admin:
+        userPassword = input("Enter the password: " )
+
+        if userPassword == AdminPassword:
+            print(f"Welcome {admin}")
+            loggedIn = True
+    else:
+        print("This user doesnt exist")
+
+
+# This functions starts the game
+
 def play_Mastermind():
     print("Welcome to Mastermind!")
     print("Guess the 4-digit code. Each digit is from 1 to 6. You have 10 attempts.")
@@ -44,7 +68,15 @@ def play_Mastermind():
             valid_Guess = len(guess) == 4 and all(c in "123456" for c in guess)
             if not valid_Guess:
                 print("Invalid input. Enter 4 digits, each from 1 to 6.")
-            show_Secret(secret_Code) if guess == "cheat" else False
+
+            if guess == "cheat":
+                if loggedIn == True:
+                    show_Secret(secret_Code)
+                else:
+                    log_In_As_Admin()
+
+            else:
+                False
 
         black, white = get_Feedback(secret_Code, guess)
         print(f"Black pegs (correct position): {black}, White pegs (wrong position): {white}")
