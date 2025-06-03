@@ -13,12 +13,12 @@ print("MasterMind")
 
 import random
 
+# This function generates the code
 def generate_Code(length=4, digits=6):
     return [str(random.randint(1, digits)) for _ in range(length)]
 
 def get_Feedback(secret, guess):
     black_Pegs = sum(s == g for s, g in zip(secret, guess))
-    
     # Count whites by subtracting black and calculating min digit frequency match
     secret_Counts = {}
     guess_Counts = {}
@@ -32,9 +32,9 @@ def get_Feedback(secret, guess):
     
     return black_Pegs, white_Pegs
 
+# This function reveals the code
 def show_Secret(mystery):
     print(mystery)
-
 
 # This function allows the user to log in
 def log_In_As_Admin():
@@ -59,7 +59,6 @@ def log_In_As_Admin():
 
 
 # This functions starts the game
-
 def play_Mastermind():
     print("Welcome to Mastermind!")
     print("Guess the 4-digit code. Each digit is from 1 to 6. You have 10 attempts.")
@@ -70,17 +69,19 @@ def play_Mastermind():
         guess = ""
         valid_Guess = False
         while not valid_Guess:
-            guess = input(f"Attempt {attempt}: ").strip()
+            guess = input(f"Attempt {attempt}: ").replace(" ", "").lower()
             valid_Guess = len(guess) == 4 and all(c in "123456" for c in guess)
-            if not valid_Guess:
+
+            if valid_Guess == True:
                 print("Invalid input. Enter 4 digits, each from 1 to 6.")
 
-            if guess == "cheat":
-                if loggedIn == True:
+            if guess == "cheat" or guess == "login":
+                if loggedIn == True and guess == "cheat":
                     show_Secret(secret_Code)
+                elif loggedIn == True and guess == "login":
+                    print(f"You are already logged in as {admin}")
                 else:
                     log_In_As_Admin()
-
             else:
                 False
 
