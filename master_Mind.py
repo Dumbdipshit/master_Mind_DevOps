@@ -1,3 +1,4 @@
+import random
 #!/bin/python3
 # MasterMind
 # by ICTROCN
@@ -11,14 +12,12 @@ loggedIn = False
 
 print("MasterMind")
 
-import random
-
 # This function generates the code
 def generate_Code(length=4, digits=6):
-    return [str(random.randint(1, digits)) for _ in range(length)]
+    return [str(random.randint(1,digits)) for _ in range(length)]
 
 def get_Feedback(secret, guess):
-    black_Pegs = sum(s == g for s, g in zip(secret, guess))
+    black_Pegs = sum(s == g for s,g in zip(secret,guess))
     # Count whites by subtracting black and calculating min digit frequency match
     secret_Counts = {}
     guess_Counts = {}
@@ -29,7 +28,6 @@ def get_Feedback(secret, guess):
             guess_Counts[g] = guess_Counts.get(g, 0) + 1
 
     white_Pegs = sum(min(secret_Counts.get(d, 0), guess_Counts.get(d, 0)) for d in guess_Counts)
-    
     return black_Pegs, white_Pegs
 
 # This function reveals the code
@@ -99,4 +97,3 @@ if __name__ == "__main__":
     while again == 'Y' :
         play_Mastermind()
         again  = input (f"Play again (Y/N) ?").upper()
-
