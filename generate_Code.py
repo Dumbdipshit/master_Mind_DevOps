@@ -11,5 +11,29 @@ def generate_Code():
 
 secret_Code = generate_Code()
 
-secret_Code = generate_Code()
-print(secret_Code)
+
+playerInput = "red BLUE yellow red"
+
+
+# This function checks if the input (user input) is allowed
+def check_Code(input):
+    colors = ["red", "orange", "yellow", "green", "blue", "purple"]
+    userInput = input.split()
+    checkInput = ["pos1", "pos2", "pos3", "pos4"]
+    validInput = True
+    
+    for i in range(len(userInput)):
+        checkInput[i] = userInput[i] in colors
+    
+    if False in checkInput:
+        validInput = False
+        
+    if validInput is True and len(userInput) == 4:
+        return True
+    else:
+        return False
+    
+print(check_Code(input()))
+        
+
+

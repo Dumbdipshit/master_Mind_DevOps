@@ -71,12 +71,34 @@ def log_In_As_Admin():
         print("You can still play or retry the log in")
 
 
+# This function checks if the input (user input) is allowed
+
+
+def check_Code(input):
+    colors = ["red", "orange", "yellow", "green", "blue", "purple"]
+    userInput = input.split()
+    checkInput = ["pos1", "pos2", "pos3", "pos4"]
+    validInput = True
+
+    for i in range(len(userInput)):
+        checkInput[i] = userInput[i] in colors
+
+    if False in checkInput:
+        validInput = False
+
+    if validInput is True and len(userInput) == 4:
+        return True
+    else:
+        return False
+
+
 # This functions starts the game
 
 
 def play_Mastermind():
     print("Welcome to Mastermind!")
-    print("Guess the 4-digit code. Each digit is from 1 to 6. You have 10 attempts.")
+    print("Guess the 4 colors. The colors can be: Red Orange, yellow, green, blue, and purple.")
+    print("You have 10 attempts.")
     secret_Code = generate_Code()
     attempts = 10
 
@@ -84,12 +106,7 @@ def play_Mastermind():
         guess = ""
         valid_Guess = False
         while not valid_Guess:
-            guess = input(f"Attempt {attempt}: ").replace(" ", "").lower()
-
-            valid_Guess = len(guess) == 4 and all(c in "123456" for c in guess)
-
-            if valid_Guess is False or guess == "cheat" or guess == "login":
-                print("Invalid input. Enter 4 digits, each from 1 to 6.")
+            guess = input(f"Attempt {attempt}: ").lower()
 
             if guess == "cheat" or guess == "login":
                 if loggedIn is True and guess == "cheat":
@@ -99,7 +116,10 @@ def play_Mastermind():
                 else:
                     log_In_As_Admin()
             else:
-                False
+                valid_Guess = check_Code(guess)
+
+            if valid_Guess is False or guess != "cheat" or guess != "login":
+                print("Invalid input. Enter 4 colors or use the useable colors")
 
         black, white = get_Feedback(secret_Code, guess)
         print(f"Black pegs (correct position): {black}, White pegs (wrong position): {white}")
