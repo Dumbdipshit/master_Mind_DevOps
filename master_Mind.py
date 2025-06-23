@@ -15,9 +15,14 @@ print("MasterMind")
 # This function generates the code
 
 
-def generate_Code(length=4, digits=6):
+def generate_Code():
+    # This array contains all the options for the code
+    colors = ["red", "orange", "yellow", "green", "blue", "purple"]
+    pins = ["pos1", "pos2", "pos3", "pos4"]
 
-    return [str(random.randint(1, digits)) for _ in range(length)]
+    for i in range(len(pins)):
+        pins[i] = colors[random.randint(0, len(colors) - 1)]
+    return pins
 
 # This function checks the secret code with the guess
 
