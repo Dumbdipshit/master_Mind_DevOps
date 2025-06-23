@@ -1,5 +1,5 @@
 import random
-#!/bin/python3
+# !/bin/python3
 # MasterMind
 # by ICTROCN
 # v1.01
@@ -13,11 +13,16 @@ loggedIn = False
 print("MasterMind")
 
 # This function generates the code
+
+
 def generate_Code(length=4, digits=6):
-    return [str(random.randint(1,digits)) for _ in range(length)]
+
+    return [str(random.randint(1, digits)) for _ in range(length)]
+
 
 def get_Feedback(secret, guess):
-    black_Pegs = sum(s == g for s,g in zip(secret,guess))
+
+    black_Pegs = sum(s == g for s, g in zip(secret, guess))
     # Count whites by subtracting black and calculating min digit frequency match
     secret_Counts = {}
     guess_Counts = {}
@@ -31,17 +36,20 @@ def get_Feedback(secret, guess):
     return black_Pegs, white_Pegs
 
 # This function reveals the code
+
+
 def show_Secret(mystery):
     print(mystery)
 
 # This function allows the user to log in
+
+
 def log_In_As_Admin():
     global loggedIn
     print("Before you cheat pls log in as a admin")
     user = input("User: ")
-        
     if user == admin:
-        userPassword = input("Enter the password: " )
+        userPassword = input("Enter the password: ")
 
         if userPassword == AdminPassword:
             print(f"Welcome {admin}")
@@ -57,6 +65,8 @@ def log_In_As_Admin():
 
 
 # This functions starts the game
+
+
 def play_Mastermind():
     print("Welcome to Mastermind!")
     print("Guess the 4-digit code. Each digit is from 1 to 6. You have 10 attempts.")
@@ -70,13 +80,13 @@ def play_Mastermind():
             guess = input(f"Attempt {attempt}: ").replace(" ", "").lower()
             valid_Guess = len(guess) == 4 and all(c in "123456" for c in guess)
 
-            if valid_Guess == True:
+            if valid_Guess is True:
                 print("Invalid input. Enter 4 digits, each from 1 to 6.")
 
             if guess == "cheat" or guess == "login":
-                if loggedIn == True and guess == "cheat":
+                if loggedIn is True and guess == "cheat":
                     show_Secret(secret_Code)
-                elif loggedIn == True and guess == "login":
+                elif loggedIn is True and guess == "login":
                     print(f"You are already logged in as {admin}")
                 else:
                     log_In_As_Admin()
@@ -92,8 +102,9 @@ def play_Mastermind():
 
     print(f"Sorry, you've used all attempts. The correct code was: {''.join(secret_Code)}")
 
+
 if __name__ == "__main__":
     again = 'Y'
-    while again == 'Y' :
+    while again == 'Y':
         play_Mastermind()
-        again  = input (f"Play again (Y/N) ?").upper()
+        again = input("Play again (Y/N) ?").upper()
