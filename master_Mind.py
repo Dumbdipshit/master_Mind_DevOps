@@ -19,6 +19,8 @@ def generate_Code(length=4, digits=6):
 
     return [str(random.randint(1, digits)) for _ in range(length)]
 
+# This function checks the secret code with the guess
+
 
 def get_Feedback(secret, guess):
 
@@ -78,9 +80,10 @@ def play_Mastermind():
         valid_Guess = False
         while not valid_Guess:
             guess = input(f"Attempt {attempt}: ").replace(" ", "").lower()
+
             valid_Guess = len(guess) == 4 and all(c in "123456" for c in guess)
 
-            if valid_Guess is True:
+            if valid_Guess is False or guess == "cheat" or guess == "login":
                 print("Invalid input. Enter 4 digits, each from 1 to 6.")
 
             if guess == "cheat" or guess == "login":
