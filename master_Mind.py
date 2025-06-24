@@ -1,4 +1,5 @@
-#!/bin/python3
+import random
+# !/bin/python3
 # MasterMind
 # by ICTROCN
 # v1.01
@@ -11,39 +12,49 @@ loggedIn = False
 
 print("MasterMind")
 
-import random
-
 # This function generates the code
-def generate_Code(length=4, digits=6):
-    return [str(random.randint(1, digits)) for _ in range(length)]
+
+
+def generate_Code():
+    # This array contains all the options for the code
+    colors = ["red", "orange", "yellow", "green", "blue", "purple"]
+    pins = ["pos1", "pos2", "pos3", "pos4"]
+
+    for i in range(len(pins)):
+        pins[i] = colors[random.randint(0, len(colors) - 1)]
+    return pins
+
+# This function checks the secret code with the guess
+
 
 def get_Feedback(secret, guess):
-    black_Pegs = sum(s == g for s, g in zip(secret, guess))
-    # Count whites by subtracting black and calculating min digit frequency match
-    secret_Counts = {}
-    guess_Counts = {}
+    blackPins = 0
+    whitePins = 0
+    userInput = guess.split()
 
-    for s, g in zip(secret, guess):
-        if s != g:
-            secret_Counts[s] = secret_Counts.get(s, 0) + 1
-            guess_Counts[g] = guess_Counts.get(g, 0) + 1
+    for i in range(len(userInput)):
+        if userInput[i] == secret[i]:
+            blackPins = blackPins + 1
+        elif userInput[i] in secret:
+            whitePins = whitePins + 1
 
-    white_Pegs = sum(min(secret_Counts.get(d, 0), guess_Counts.get(d, 0)) for d in guess_Counts)
-    
-    return black_Pegs, white_Pegs
+    return blackPins, whitePins
 
 # This function reveals the code
+
+
 def show_Secret(mystery):
     print(mystery)
 
 # This function allows the user to log in
+
+
 def log_In_As_Admin():
     global loggedIn
     print("Before you cheat pls log in as a admin")
     user = input("User: ")
-        
     if user == admin:
-        userPassword = input("Enter the password: " )
+        userPassword = input("Enter the password: ")
 
         if userPassword == AdminPassword:
             print(f"Welcome {admin}")
@@ -58,10 +69,34 @@ def log_In_As_Admin():
         print("You can still play or retry the log in")
 
 
+# This function checks if the input (user input) is allowed
+
+
+def check_Code(input):
+    colors = ["red", "orange", "yellow", "green", "blue", "purple"]
+    userInput = input.split()
+    checkInput = ["pos1", "pos2", "pos3", "pos4"]
+    validInput = True
+
+    for i in range(len(userInput)):
+        checkInput[i] = userInput[i] in colors
+
+    if False in checkInput:
+        validInput = False
+
+    if validInput is True and len(userInput) == 4:
+        return True
+    else:
+        return False
+
+
 # This functions starts the game
+
+
 def play_Mastermind():
     print("Welcome to Mastermind!")
-    print("Guess the 4-digit code. Each digit is from 1 to 6. You have 10 attempts.")
+    print("Guess the 4 colors. The colors can be: Red Orange, yellow, green, blue, and purple.")
+    print("You have 10 attempts.")
     secret_Code = generate_Code()
     attempts = 10
 
@@ -69,21 +104,20 @@ def play_Mastermind():
         guess = ""
         valid_Guess = False
         while not valid_Guess:
-            guess = input(f"Attempt {attempt}: ").replace(" ", "").lower()
-            valid_Guess = len(guess) == 4 and all(c in "123456" for c in guess)
-
-            if valid_Guess == True:
-                print("Invalid input. Enter 4 digits, each from 1 to 6.")
+            guess = input(f"Attempt {attempt}: ").lower()
 
             if guess == "cheat" or guess == "login":
-                if loggedIn == True and guess == "cheat":
+                if loggedIn is True and guess == "cheat":
                     show_Secret(secret_Code)
-                elif loggedIn == True and guess == "login":
+                elif loggedIn is True and guess == "login":
                     print(f"You are already logged in as {admin}")
                 else:
                     log_In_As_Admin()
             else:
-                False
+                valid_Guess = check_Code(guess)
+
+            if valid_Guess is False:
+                print("Invalid input. Enter 4 colors or use the useable colors")
 
         black, white = get_Feedback(secret_Code, guess)
         print(f"Black pegs (correct position): {black}, White pegs (wrong position): {white}")
@@ -94,9 +128,9 @@ def play_Mastermind():
 
     print(f"Sorry, you've used all attempts. The correct code was: {''.join(secret_Code)}")
 
+
 if __name__ == "__main__":
     again = 'Y'
-    while again == 'Y' :
+    while again == 'Y':
         play_Mastermind()
-        again  = input (f"Play again (Y/N) ?").upper()
-
+        again = input("Play again (Y/N) ?").upper()
