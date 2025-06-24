@@ -78,11 +78,12 @@ def check_Code(input):
     checkInput = ["pos1", "pos2", "pos3", "pos4"]
     validInput = True
 
-    for i in range(len(userInput)):
-        checkInput[i] = userInput[i] in colors
+    if len(userInput) < 4:
+        for i in range(len(userInput)):
+            checkInput[i] = userInput[i] in colors
 
-    if False in checkInput:
-        validInput = False
+        if False in checkInput:
+            validInput = False
 
     if validInput is True and len(userInput) == 4:
         return True
