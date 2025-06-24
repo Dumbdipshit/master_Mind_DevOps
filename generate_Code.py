@@ -1,39 +1,23 @@
-import random
-
-def generate_Code():
-    # This array contains all the options for the code
-    colors = ["red", "orange", "yellow", "green", "blue", "purple"]
-    pins = ["pos1", "pos2", "pos3", "pos4"]
-
-    for i in range(len(pins)):
-        pins[i] = colors[random.randint(0, len(colors) - 1)]
-    return pins
-
-secret_Code = generate_Code()
+secret_Code = ["blue", "red", "red", "red"]
 
 
-playerInput = "red BLUE yellow red"
+playerInput = "red BLUE yellow yellow"
 
 
-# This function checks if the input (user input) is allowed
-def check_Code(input):
-    colors = ["red", "orange", "yellow", "green", "blue", "purple"]
-    userInput = input.split()
-    checkInput = ["pos1", "pos2", "pos3", "pos4"]
-    validInput = True
-    
+def get_Feedback(secret, guess):
+    blackPins = 0
+    whitePins = 0
+    userInput = guess.split()
+
     for i in range(len(userInput)):
-        checkInput[i] = userInput[i] in colors
-    
-    if False in checkInput:
-        validInput = False
-        
-    if validInput is True and len(userInput) == 4:
-        return True
-    else:
-        return False
-    
-print(check_Code(input()))
-        
+        if userInput[i] == secret[i]:
+            blackPins = blackPins + 1
+        elif userInput[i] in secret:
+            whitePins = whitePins + 1
 
+    return blackPins, whitePins
+
+
+        
+print(get_Feedback(secret_Code, playerInput.lower()))
 

@@ -28,19 +28,17 @@ def generate_Code():
 
 
 def get_Feedback(secret, guess):
+    blackPins = 0
+    whitePins = 0
+    userInput = guess.split()
 
-    black_Pegs = sum(s == g for s, g in zip(secret, guess))
-    # Count whites by subtracting black and calculating min digit frequency match
-    secret_Counts = {}
-    guess_Counts = {}
+    for i in range(len(userInput)):
+        if userInput[i] == secret[i]:
+            blackPins = blackPins + 1
+        elif userInput[i] in secret:
+            whitePins = whitePins + 1
 
-    for s, g in zip(secret, guess):
-        if s != g:
-            secret_Counts[s] = secret_Counts.get(s, 0) + 1
-            guess_Counts[g] = guess_Counts.get(g, 0) + 1
-
-    white_Pegs = sum(min(secret_Counts.get(d, 0), guess_Counts.get(d, 0)) for d in guess_Counts)
-    return black_Pegs, white_Pegs
+    return blackPins, whitePins
 
 # This function reveals the code
 
@@ -118,7 +116,7 @@ def play_Mastermind():
             else:
                 valid_Guess = check_Code(guess)
 
-            if valid_Guess is False or guess != "cheat" or guess != "login":
+            if valid_Guess is False:
                 print("Invalid input. Enter 4 colors or use the useable colors")
 
         black, white = get_Feedback(secret_Code, guess)
