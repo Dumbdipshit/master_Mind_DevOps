@@ -85,8 +85,10 @@ def check_Code(input):
         if False in checkInput:
             validInput = False
 
-    if validInput is True and len(userInput) == 4:
-        return True
+        if validInput is True and len(userInput) == 4:
+            return True
+        else:
+            return False
     else:
         return False
 
