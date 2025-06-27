@@ -68,7 +68,6 @@ def log_In_As_Admin():
         print("This user doesnt exist")
         print("You can still play or retry the log in")
 
-
 # This function checks if the input (user input) is allowed
 
 
@@ -78,7 +77,7 @@ def check_Code(input):
     checkInput = ["pos1", "pos2", "pos3", "pos4"]
     validInput = True
 
-    if len(userInput) < 4:
+    if(len(userInput) == 4):
         for i in range(len(userInput)):
             checkInput[i] = userInput[i] in colors
 
